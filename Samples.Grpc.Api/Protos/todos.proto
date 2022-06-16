@@ -2,6 +2,8 @@ syntax = "proto3";
 
 option csharp_namespace = "Samples.Grpc.Api";
 
+import "google/protobuf/empty.proto";
+
 package todos;
 
 // The todo service definition.
@@ -11,6 +13,8 @@ service Todos {
 
   // Get a single Todo by its id.
   rpc GetTodo (GetTodoRequest) returns (Todo);
+
+  rpc DeleteTodos (google.protobuf.Empty) returns (google.protobuf.Empty);
 
 }
 

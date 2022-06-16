@@ -1,5 +1,8 @@
 ﻿using Grpc.Core;
 using Bogus;
+using Microsoft.AspNetCore.Authorization;
+using Google.Protobuf.WellKnownTypes;
+using System.Diagnostics;
 
 namespace Samples.Grpc.Api.Services
 {
@@ -42,6 +45,27 @@ namespace Samples.Grpc.Api.Services
 
             return Task.FromResult(result);
 
+        }
+
+        /// <summary>
+        /// Deletes all Todos.
+        /// </summary>
+        /// <param name="request">The Empty Request message</param>
+        /// <param name="context">The context for the RPC call</param>
+        /// <returns>An Empty Response</returns>
+        [Authorize]
+        public override Task<Empty> DeleteTodos(Empty request, ServerCallContext context)
+        {
+
+            var user = context.GetHttpContext().User;
+            foreach (var claim in user.Claims)
+            {
+                Trace.WriteLine(claim);
+            }
+
+            _todos.Clear();
+
+            return Task.FromResult(new Empty());
         }
 
     }
