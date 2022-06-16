@@ -1,0 +1,38 @@
+syntax = "proto3";
+
+option csharp_namespace = "Samples.Grpc.Api";
+
+package todos;
+
+// The todo service definition.
+service Todos {
+  // Gets a collection of Todos.
+  rpc GetTodos (GetTodosReqeust) returns (GetTodosResponse);
+
+  // Get a single Todo by its id.
+  rpc GetTodo (GetTodoRequest) returns (Todo);
+
+}
+
+message GetTodosReqeust {
+    int32 userId = 1;
+
+}
+ 
+// The request message containing the Todo ID.
+message GetTodoRequest {
+    int32 id = 1;
+}
+ 
+// The response message containing the collection of Todos.
+message GetTodosResponse {
+    repeated Todo todos = 1;
+}
+ 
+// Represents a 'Todo' item.
+message Todo {
+    int32 id = 1;
+    int32 userId = 2;
+    string title = 3;
+    bool completed = 4;
+}
